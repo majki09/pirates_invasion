@@ -145,8 +145,11 @@ class AlienInvasion:
 
         # Update score
         if collisions:
-            self.stats.score += self.settings.alien_points
+            for alien in collisions.values():
+                self.stats.score += self.settings.alien_points * len(alien)
             self.sb.prep_score()
+            self.sb.check_high_score()
+
 
         # Create new fleet when the last alien is shoot down.
         if not self.aliens:
