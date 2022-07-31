@@ -2,6 +2,7 @@ import sys
 from time import sleep
 
 import pygame
+from random import randint
 
 from settings import Settings
 from game_stats import GameStats
@@ -180,8 +181,9 @@ class AlienInvasion:
         # Create fleet of aliens
         for row_number in range(number_rows):
             for alien_number in range(number_aliens_x):
-                # Create an alien and place it into a row
-                self._create_alien(alien_number, row_number)
+                # Create an alien and place it into a row with probability of 80%
+                if randint(1, 10) <= 8: self._create_alien(alien_number, row_number)
+
 
     def _create_alien(self, alien_number, row_number):
         """Create and alien and place it into a row"""
