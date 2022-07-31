@@ -182,7 +182,7 @@ class AlienInvasion:
         for row_number in range(number_rows):
             for alien_number in range(number_aliens_x):
                 # Create an alien and place it into a row with probability of 80%
-                if randint(1, 10) <= 8: self._create_alien(alien_number, row_number)
+                if randint(1, 10) <= self.settings.alien_probability: self._create_alien(alien_number, row_number)
 
 
     def _create_alien(self, alien_number, row_number):

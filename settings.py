@@ -19,7 +19,8 @@ class Settings:
         self.bullets_allowed = 3
 
         # Alien settings
-        self.fleet_drop_speed = 30
+        self.fleet_drop_speed = 20
+        self.alien_probability = 8 # probabilty (1-10) of alien placed in a fleet
 
         # How fast the game speeds up
         self.speedup_scale = 1.1
