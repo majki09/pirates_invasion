@@ -1,3 +1,7 @@
+# TODO: create graphics for ship
+# TODO: create graphics for pirates
+# TODO: create README file
+
 import sys
 from time import sleep
 
@@ -73,6 +77,7 @@ class PiratesInvasion:
                 self._check_play_button(mouse_pos)
 
     def _check_play_button(self, mouse_pos):
+        # TODO: add option to start with space
         """Starts a new game when player clicks a button."""
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.stats.game_active:
@@ -106,7 +111,7 @@ class PiratesInvasion:
         elif event.key == pygame.K_LEFT:
             # Move he ship to the left
             self.ship.moving_left = True
-        elif event.key == pygame.K_q:
+        elif event.key == pygame.K_q: # TODO: add description to quit with q
             sys.exit()
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()

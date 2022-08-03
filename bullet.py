@@ -12,7 +12,7 @@ class Bullet(Sprite):
         self.color = self.settings.bullet_color
 
         # Create a bullet rect at (0, 0, 0) and then set the correct position.
-        self.rect = pygame.Rect(0,0, self.settings.bullet_width, self.settings.bullet_height)
+        self.rect = pygame.Rect(0,0, self.settings.bullet_height, self.settings.bullet_height)
         self.rect.midtop = ai_game.ship.rect.midtop
 
         # Store bullet's position at decimal value
@@ -27,5 +27,5 @@ class Bullet(Sprite):
 
     def draw_bullet(self):
         """Draw the bullet on the screen."""
-        pygame.draw.rect(self.screen, self.color, self.rect)
+        pygame.draw.circle(self.screen, self.color, (self.rect.x, self.rect.y), self.settings.bullet_height)
 
