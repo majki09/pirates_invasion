@@ -9,10 +9,10 @@ from game_stats import GameStats
 from button import Button
 from ship import Ship
 from bullet import Bullet
-from alien import Alien
+from pirate import Pirate
 from scoreboard import Scoreboard
 
-class AlienInvasion:
+class PiratesInvasion:
     """Overall class to manage game assets and behaviour."""
 
     def __init__(self):
@@ -25,7 +25,7 @@ class AlienInvasion:
         )
         self.settings.screen_width = self.screen.get_rect().width
         self.settings.screen_height = self.screen.get_rect().height
-        pygame.display.set_caption("Alien Invasion")
+        pygame.display.set_caption("pirate Invasion")
 
         # Create an instance of GameStatistics
         self.stats = GameStats(self)
@@ -35,9 +35,9 @@ class AlienInvasion:
 
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
-        self.aliens = pygame.sprite.Group()
+        self.pirates = pygame.sprite.Group()
 
-        # Create alien fleet
+        # Create pirate fleet
         self._create_fleet()
 
         # Create a start/reset button
@@ -53,7 +53,7 @@ class AlienInvasion:
             if self.stats.game_active:
                 self.ship.update()
                 self._update_bullets()
-                self._update_aliens()
+                self._update_pirates()
 
             self._update_screen()
 
@@ -87,8 +87,8 @@ class AlienInvasion:
             self.sb.prep_level()
             self.sb.prep_ships()
 
-            # Delete remaining aliens and bullets.
-            self.aliens.empty()
+            # Delete remaining pirates and bullets.
+            self.pirates.empty()
             self.bullets.empty()
 
             # Create a new fleet and center the ship.
@@ -136,25 +136,25 @@ class AlienInvasion:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
-        # Check for collissions between aliens and bullets
-        self._check_bullet_alien_collisions()
+        # Check for collissions between pirates and bullets
+        self._check_bullet_pirate_collisions()
 
-    def _check_bullet_alien_collisions(self):
-        """ Check for any bullets that hit aliens.
-        If so, get rid of the bullet and the alien."""
-        # Remove any bullets and aliens that collided
-        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+    def _check_bullet_pirate_collisions(self):
+        """ Check for any bullets that hit pirates.
+        If so, get rid of the bullet and the pirate."""
+        # Remove any bullets and pirates that collided
+        collisions = pygame.sprite.groupcollide(self.bullets, self.pirates, True, True)
 
         # Update score
         if collisions:
-            for alien in collisions.values():
-                self.stats.score += self.settings.alien_points * len(alien)
+            for pirate in collisions.values():
+                self.stats.score += self.settings.pirate_points * len(pirate)
             self.sb.prep_score()
             self.sb.check_high_score()
 
 
-        # Create new fleet when the last alien is shoot down.
-        if not self.aliens:
+        # Create new fleet when the last pirate is shoot down.
+        if not self.pirates:
             # Destroy existing bullets and create new fleet
             self.bullets.empty()
             self._create_fleet()
@@ -165,74 +165,74 @@ class AlienInvasion:
             self.sb.prep_level()
 
     def _create_fleet(self):
-        """Create fleet of aliens."""
-        alien = Alien(self)
-        alien_width, alien_height = alien.rect.size
+        """Create fleet of pirates."""
+        pirate = Pirate(self)
+        pirate_width, pirate_height = pirate.rect.size
 
-        # Determine number of aliens in a row
-        available_space_x = self.settings.screen_width - 2 * alien_width
-        number_aliens_x = available_space_x // (2 * alien_width)
+        # Determine number of pirates in a row
+        available_space_x = self.settings.screen_width - 2 * pirate_width
+        number_pirates_x = available_space_x // (2 * pirate_width)
 
         # Determine number of rows
         ship_height = self.ship.rect.height
-        available_space_y = self.settings.screen_height - ship_height - 3 * alien_height
-        number_rows = available_space_y // (2*alien_height)
+        available_space_y = self.settings.screen_height - ship_height - 3 * pirate_height
+        number_rows = available_space_y // (2*pirate_height)
 
-        # Create fleet of aliens
+        # Create fleet of pirates
         for row_number in range(number_rows):
-            for alien_number in range(number_aliens_x):
-                # Create an alien and place it into a row with probability of 80%
-                if randint(1, 10) <= self.settings.alien_probability: self._create_alien(alien_number, row_number)
+            for pirate_number in range(number_pirates_x):
+                # Create an pirate and place it into a row with probability of 80%
+                if randint(1, 10) <= self.settings.pirate_probability: self._create_pirate(pirate_number, row_number)
 
 
-    def _create_alien(self, alien_number, row_number):
-        """Create and alien and place it into a row"""
-        # Create an ALien
-        alien = Alien(self)
+    def _create_pirate(self, pirate_number, row_number):
+        """Create and pirate and place it into a row"""
+        # Create an pirate
+        pirate = Pirate(self)
 
-        # Calculate how many alients fit into row. Spacing is equal to one alien.
-        alien_width, alien_height = alien.rect.size
-        alien.x = alien_width + 2 * alien_width * alien_number
-        alien.rect.x = alien.x
-        alien.rect.y = alien_height + 2 * alien.rect.height * row_number
-        self.aliens.add(alien)
+        # Calculate how many piratets fit into row. Spacing is equal to one pirate.
+        pirate_width, pirate_height = pirate.rect.size
+        pirate.x = pirate_width + 2 * pirate_width * pirate_number
+        pirate.rect.x = pirate.x
+        pirate.rect.y = pirate_height + 2 * pirate.rect.height * row_number
+        self.pirates.add(pirate)
 
-    def _update_aliens(self):
-        """Update the positions of all aliens in the fleet."""
+    def _update_pirates(self):
+        """Update the positions of all pirates in the fleet."""
         self._check_fleet_edges()
-        self.aliens.update()
+        self.pirates.update()
         
-        # Look for alien-ship collisions.
-        if pygame.sprite.spritecollideany(self.ship, self.aliens):
+        # Look for pirate-ship collisions.
+        if pygame.sprite.spritecollideany(self.ship, self.pirates):
             # print('Ship hit!')
             self._ship_hit()
 
-        # Look for aliens hitting the bottom of the screen.
-        self._check_aliens_bottom()
+        # Look for pirates hitting the bottom of the screen.
+        self._check_pirates_bottom()
 
 
     def _check_fleet_edges(self):
-        """Respond appropriately if any aliens have reached the edge."""
-        for alien in self.aliens.sprites():
-            if alien.check_edges():
+        """Respond appropriately if any pirates have reached the edge."""
+        for pirate in self.pirates.sprites():
+            if pirate.check_edges():
                 self._change_fleet_direction()
                 break
 
     def _change_fleet_direction(self):
         """Drop the entire feet and change its direction."""
-        for alien in self.aliens.sprites():
-            alien.rect.y += self.settings.fleet_drop_speed
+        for pirate in self.pirates.sprites():
+            pirate.rect.y += self.settings.fleet_drop_speed
         self.settings.fleet_direction *= -1
 
     def _ship_hit(self):
-        """Respond to the ship being hit by an alien."""
+        """Respond to the ship being hit by an pirate."""
         if self.stats.ships_left > 0:
             # Decrement ships_left and update scoreboard
             self.stats.ships_left -= 1
             self.sb.prep_ships()
 
-            # Get rid of any remaining aliens and bullets
-            self.aliens.empty()
+            # Get rid of any remaining pirates and bullets
+            self.pirates.empty()
             self.bullets.empty()
 
             # Create a new ship and a new fleet
@@ -246,12 +246,12 @@ class AlienInvasion:
             self.stats.game_active = False
             pygame.mouse.set_visible(True)
 
-    def _check_aliens_bottom(self):
-        """Check if any of the aliens reached the bottom of the screen."""
+    def _check_pirates_bottom(self):
+        """Check if any of the pirates reached the bottom of the screen."""
         screen_rect = self.screen.get_rect()
 
-        for alien in self.aliens.sprites():
-                if alien.rect.bottom >= screen_rect.bottom:
+        for pirate in self.pirates.sprites():
+                if pirate.rect.bottom >= screen_rect.bottom:
                     # Threat this the same as if the ship got hit
                     self._ship_hit()
                     break
@@ -269,8 +269,8 @@ class AlienInvasion:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
 
-        # draw aliens
-        self.aliens.draw(self.screen)
+        # draw pirates
+        self.pirates.draw(self.screen)
 
         # Draw player's score
         self.sb.show_score()
@@ -284,5 +284,5 @@ class AlienInvasion:
 
 if __name__ == '__main__':
     # Make a game instance and run a game
-    ai = AlienInvasion()
+    ai = PiratesInvasion()
     ai.run_game()

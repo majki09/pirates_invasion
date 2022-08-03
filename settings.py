@@ -1,5 +1,5 @@
 class Settings:
-    """A class to store all the settings for Alien Invasion."""
+    """A class to store all the settings for pirate Invasion."""
 
     def __init__(self):
         """Initialize game's static settings."""
@@ -18,9 +18,9 @@ class Settings:
         self.bullet_color = (60, 60, 60)
         self.bullets_allowed = 3
 
-        # Alien settings
+        # pirate settings
         self.fleet_drop_speed = 20
-        self.alien_probability = 8 # probabilty (1-10) of alien placed in a fleet
+        self.pirate_probability = 8 # probabilty (1-10) of pirate placed in a fleet
 
         # How fast the game speeds up
         self.speedup_scale = 1.1
@@ -34,19 +34,19 @@ class Settings:
         """Initialize settings that change throughout the game."""
         self.ship_speed = 2
         self.bullet_speed = 2
-        self.alien_speed = 0.75
+        self.pirate_speed = 0.75
 
         # Fleet direction: 1 - right, -1 - left
         self.fleet_direction = 1
 
-        # Points for shooting an alien
-        self.alien_points = 20
+        # Points for shooting an pirate
+        self.pirate_points = 20
 
     def increase_speed(self):
         """Increase speed settings and scoring."""
         self.ship_speed *= self.speedup_scale
         self.bullet_speed *= self.speedup_scale
-        self.alien_speed *= self.speedup_scale
+        self.pirate_speed *= self.speedup_scale
 
-        self.alien_points *= self.speedup_score
-        self.alien_points = int(self.alien_points)
+        self.pirate_points *= self.speedup_score
+        self.pirate_points = int(self.pirate_points)
