@@ -1,5 +1,3 @@
-# TODO: create graphics for ship
-# TODO: create graphics for pirates
 # TODO: create README file
 
 import sys
@@ -186,16 +184,16 @@ class PiratesInvasion:
         # Create fleet of pirates
         for row_number in range(number_rows):
             for pirate_number in range(number_pirates_x):
-                # Create an pirate and place it into a row with probability of 80%
+                # Create a pirate and place it into a row with probability of 80%
                 if randint(1, 10) <= self.settings.pirate_probability: self._create_pirate(pirate_number, row_number)
 
 
     def _create_pirate(self, pirate_number, row_number):
-        """Create and pirate and place it into a row"""
-        # Create an pirate
+        """Create a pirate and place it into a row"""
+        # Create a pirate
         pirate = Pirate(self)
 
-        # Calculate how many piratets fit into row. Spacing is equal to one pirate.
+        # Calculate how many pirates fit into row. Spacing is equal to one pirate.
         pirate_width, pirate_height = pirate.rect.size
         pirate.x = pirate_width + 2 * pirate_width * pirate_number
         pirate.rect.x = pirate.x
@@ -215,6 +213,12 @@ class PiratesInvasion:
         # Look for pirates hitting the bottom of the screen.
         self._check_pirates_bottom()
 
+    def _change_fleet_direction(self):
+        """Drop the entire feet and change its direction."""
+        for pirate in self.pirates.sprites():
+            pirate.rect.y += self.settings.fleet_drop_speed
+            pirate.image = pygame.transform.flip(pirate.image, True, False)
+        self.settings.fleet_direction *= -1
 
     def _check_fleet_edges(self):
         """Respond appropriately if any pirates have reached the edge."""
@@ -222,12 +226,6 @@ class PiratesInvasion:
             if pirate.check_edges():
                 self._change_fleet_direction()
                 break
-
-    def _change_fleet_direction(self):
-        """Drop the entire feet and change its direction."""
-        for pirate in self.pirates.sprites():
-            pirate.rect.y += self.settings.fleet_drop_speed
-        self.settings.fleet_direction *= -1
 
     def _ship_hit(self):
         """Respond to the ship being hit by an pirate."""
