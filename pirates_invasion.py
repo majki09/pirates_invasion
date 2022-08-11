@@ -187,6 +187,8 @@ class PiratesInvasion:
                 # Create a pirate and place it into a row with probability of 80%
                 if randint(1, 10) <= self.settings.pirate_probability: self._create_pirate(pirate_number, row_number)
 
+        self.settings.fleet_direction = 1
+
 
     def _create_pirate(self, pirate_number, row_number):
         """Create a pirate and place it into a row"""
