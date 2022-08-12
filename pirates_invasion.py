@@ -43,7 +43,7 @@ class PiratesInvasion:
         self._create_fleet()
 
         # Create a start/reset button
-        self.play_button = Button(self, "Zagraj")
+        self.play_button = Button(self, "Click to play")
 
 
     def run_game(self):

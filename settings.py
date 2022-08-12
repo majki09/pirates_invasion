@@ -39,7 +39,7 @@ class Settings:
         # Fleet direction: 1 - right, -1 - left
         self.fleet_direction = 1
 
-        # Points for shooting an pirate
+        # Points for shooting a pirate
         self.pirate_points = 20
 
     def increase_speed(self):

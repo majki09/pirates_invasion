@@ -1,5 +1,6 @@
 import pygame.font
 from pygame.sprite import Group
+# TODO store all-time high-score in a file and display it
 
 from ship import Ship
 
