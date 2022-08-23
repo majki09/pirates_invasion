@@ -1,5 +1,3 @@
-# TODO: create README file
-
 import sys
 from time import sleep
 
@@ -14,6 +12,7 @@ from bullet import Bullet
 from pirate import Pirate
 from scoreboard import Scoreboard
 
+
 class PiratesInvasion:
     """Overall class to manage game assets and behaviour."""
 
@@ -22,7 +21,7 @@ class PiratesInvasion:
         pygame.init()
         self.settings = Settings()
         self.screen = pygame.display.set_mode(
-            (0,0),
+            (0, 0),
             pygame.FULLSCREEN
         )
         self.settings.screen_width = self.screen.get_rect().width
@@ -44,7 +43,6 @@ class PiratesInvasion:
 
         # Create a start/reset button
         self.play_button = Button(self, "Click to play")
-
 
     def run_game(self):
         """Start the main loop for the game."""
@@ -98,7 +96,7 @@ class PiratesInvasion:
             self._create_fleet()
             self.ship.center_ship()
 
-            # Hide mouse coursor.
+            # Hide mouse cursor.
             pygame.mouse.set_visible(False)
 
     def _check_keydown_events(self, event):
@@ -109,7 +107,7 @@ class PiratesInvasion:
         elif event.key == pygame.K_LEFT:
             # Move he ship to the left
             self.ship.moving_left = True
-        elif event.key == pygame.K_q: # TODO: add description to quit with q
+        elif event.key == pygame.K_q:
             sys.exit()
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
@@ -155,7 +153,6 @@ class PiratesInvasion:
             self.sb.prep_score()
             self.sb.check_high_score()
 
-
         # Create new fleet when the last pirate is shoot down.
         if not self.pirates:
             # Destroy existing bullets and create new fleet
@@ -188,7 +185,6 @@ class PiratesInvasion:
                 if randint(1, 10) <= self.settings.pirate_probability: self._create_pirate(pirate_number, row_number)
 
         self.settings.fleet_direction = 1
-
 
     def _create_pirate(self, pirate_number, row_number):
         """Create a pirate and place it into a row"""
@@ -256,10 +252,10 @@ class PiratesInvasion:
         screen_rect = self.screen.get_rect()
 
         for pirate in self.pirates.sprites():
-                if pirate.rect.bottom >= screen_rect.bottom:
-                    # Threat this the same as if the ship got hit
-                    self._ship_hit()
-                    break
+            if pirate.rect.bottom >= screen_rect.bottom:
+                # Threat this the same as if the ship got hit
+                self._ship_hit()
+                break
 
     def _update_screen(self):
         """Updates the images on the screen, and flip to the new screen."""
@@ -286,6 +282,7 @@ class PiratesInvasion:
 
         # Make the most recently drawn screen visible
         pygame.display.flip()
+
 
 if __name__ == '__main__':
     # Make a game instance and run a game
