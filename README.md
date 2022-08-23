@@ -16,7 +16,7 @@ You are the captain of a ship fighting the pirates fleet that wants to enter the
 
 
 
-![start_screen.JPG](C:\Users\jkacz\Documents\python_nauka\alien_invasion\screenshots\start_screen.JPG)
+![Screen that appears when you run the game.](.\screenshots\start_screen.JPG "Start scree")
 
 To start the game, press __Click to play__ button.
 
