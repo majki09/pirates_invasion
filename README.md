@@ -16,7 +16,7 @@ You are the captain of a ship fighting the pirates fleet that wants to enter the
 
 
 
-![Screen that appears when you run the game.](.\screenshots\start_screen.JPG "Start scree")
+![Screen that appears when you run the game.](./screenshots/start_screen.JPG "Start screen")
 
 To start the game, press __Click to play__ button.
 
