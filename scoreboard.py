@@ -19,11 +19,17 @@ class Scoreboard:
         self.text_color = (63, 72, 204)
         self.font = pygame.font.SysFont(None, 48)
 
+        # Font settings for quit instructions
+        self.instructions_text_color = (136, 0, 21)
+        self.instructions_font = pygame.font.SysFont(None, 24)
+
+
         # prepare the initial score image
         self.prep_score()
         self.prep_high_score()
         self.prep_level()
         self.prep_ships()
+        self.prep_quit_instructions()
 
     def prep_score(self):
         """Turn the score into a rendered image."""
@@ -53,6 +59,14 @@ class Scoreboard:
         self.high_score_rect.centerx = self.screen_rect.centerx
         self.high_score_rect.top = self.screen_rect.top
 
+    def prep_quit_instructions(self):
+        """Add quit instruction below the high score"""
+        quit_instruction = "(press q to quit)"
+        self.quit_instruction_image = self.instructions_font.render(quit_instruction, True, self.instructions_text_color, self.settings.bg_color)
+        self.quit_instruction_rect = self.quit_instruction_image.get_rect()
+        self.quit_instruction_rect.centerx = self.screen_rect.centerx
+        self.quit_instruction_rect.top = self.high_score_rect.bottom
+
     def prep_level(self):
         """Turn the current level into an image."""
         level_str = str(f"level {self.stats.level}")
@@ -77,5 +91,6 @@ class Scoreboard:
         self.screen.blit(self.score_image, self.score_rect)
         self.screen.blit(self.high_score_image, self.high_score_rect)
         self.screen.blit(self.level_image, self.level_rect)
+        self.screen.blit(self.quit_instruction_image, self.quit_instruction_rect)
         self.ships.draw(self.screen)
 
