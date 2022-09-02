@@ -233,6 +233,15 @@ class PiratesInvasion:
     def _ship_hit(self):
         """Respond to the ship being hit by an pirate."""
         if self.stats.ships_left > 0:
+            # Update high score to stat file
+            with open("game_stats.dat", 'rb') as stats_file:
+                score_bytes = stats_file.read(4)
+                high_score_from_file = int.from_bytes(score_bytes, byteorder='big')
+            if self.stats.high_score > high_score_from_file:
+                with open("game_stats.dat", "wb") as stats_file:
+                    score_bytes = bytearray(self.stats.score.to_bytes(4, byteorder="big"))
+                    stats_file.write(score_bytes)
+
             # Decrement ships_left and update scoreboard
             self.stats.ships_left -= 1
             self.sb.prep_ships()

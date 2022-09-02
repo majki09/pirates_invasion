@@ -9,8 +9,10 @@ class GameStats:
         # Start pirate Invasion in inactive state
         self.game_active = False
 
-        # High score - never to be resetted
-        self.high_score = 0
+        # High score - read from game_stats.dat file
+        with open("game_stats.dat", 'rb') as stats_file:
+            score_bytes = stats_file.read(4)
+            self.high_score = int.from_bytes(score_bytes, byteorder='big')
 
     def reset_stats(self):
         """Initialize statistics that can change during the game."""
