@@ -57,6 +57,28 @@ class PiratesInvasion:
 
             self._update_screen()
 
+    def _start_game(self):
+        # Reset game pace
+        self.settings.initialize_dynamic_settings()
+
+        # Reset game statistics.
+        self.stats.reset_stats()
+        self.stats.game_active = True
+        self.sb.prep_score()
+        self.sb.prep_level()
+        self.sb.prep_ships()
+
+        # Delete remaining pirates and bullets.
+        self.pirates.empty()
+        self.bullets.empty()
+
+        # Create a new fleet and center the ship.
+        self._create_fleet()
+        self.ship.center_ship()
+
+        # Hide mouse cursor.
+        pygame.mouse.set_visible(False)
+
     def _check_events(self):
         """Respond to keypresses and mouse moves"""
         for event in pygame.event.get():
@@ -77,27 +99,7 @@ class PiratesInvasion:
         """Starts a new game when player clicks a button."""
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.stats.game_active:
-
-            # Reset game pace
-            self.settings.initialize_dynamic_settings()
-
-            # Reset game statistics.
-            self.stats.reset_stats()
-            self.stats.game_active = True
-            self.sb.prep_score()
-            self.sb.prep_level()
-            self.sb.prep_ships()
-
-            # Delete remaining pirates and bullets.
-            self.pirates.empty()
-            self.bullets.empty()
-
-            # Create a new fleet and center the ship.
-            self._create_fleet()
-            self.ship.center_ship()
-
-            # Hide mouse cursor.
-            pygame.mouse.set_visible(False)
+            self._start_game()
 
     def _check_keydown_events(self, event):
         """Respond to keypresses"""
@@ -110,7 +112,10 @@ class PiratesInvasion:
         elif event.key == pygame.K_q:
             sys.exit()
         elif event.key == pygame.K_SPACE:
-            self._fire_bullet()
+            if self.stats.game_active:
+                self._fire_bullet()
+            elif not self.stats.game_active:
+                self._start_game()
 
     def _check_keyup_events(self, event):
         """Respond to keypresses"""
