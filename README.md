@@ -1,6 +1,6 @@
 # Pirates Invasion
 
-by Janek SQ9NIL, www.operator-paranedyk.pl
+by Janek SQ9NIL, www.operator-paramedyk.pl
 
 ## Introduction
 
