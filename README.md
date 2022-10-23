@@ -2,6 +2,8 @@
 
 by Janek SQ9NIL, www.operator-paramedyk.pl
 
+Thanks @majki09 for your contribution!
+
 ## Introduction
 
 <i> Pirates Invasion</i> is a simple <i>Space Invaders</i> clone based on tutorial in Eric Matthes _Python Crash Course: A Hands-On, Project-Based Introduction to Programming_ (2nd Edition by No Starch Press, Inc.). I followed his instructions when I started to learn Python and then made some changes:
@@ -87,11 +89,3 @@ These settings will change during the gameplay.
 #### Points for shooting a pirate
 
 - initial points value for a pirate ship shoot down:  <code>self.pirate_points = 20</code>
-
-## TO DOs
-
-I want to make two improvements in this project:
-
-- add option to start the game with pressing the space bar,
-
-- present all-the-time top score at the top of the screen.
